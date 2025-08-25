@@ -1,4 +1,4 @@
-# ＭＯＳＡＣＣ／第二復興庁(仮題)
+# MOSACC/第二復興庁(仮題)
 
 **著 大江英明**  
 (C)2018,2025 Hideaki Huang Aue, All Rights Reserved.
@@ -10,8 +10,6 @@
 > △This is a work of fiction inspired by real-world institutions, events, and technologies. Names, characters, organizations, and incidents are either fictional or used fictitiously. Any resemblance to actual persons, institutions, or events is purely coincidental and not intended to represent real-world counterparts.
 
 ```
-#mynote: start_safehold
-
 【パイロット版(2018年制作)よりCopilot/gpt-5が生成】
 
 秒針が重なる、その瞬間。世界は変わる。
@@ -33,8 +31,6 @@
 
 恋と時間と世界を賭けた、極限のループ・スリラー開幕。
 秒針が刻むのは、愛か、運命か、それとも銃弾か。
-
-#mynote: end_safehold
 ```
 
 ## このおハナシのヒト側コンセプト
