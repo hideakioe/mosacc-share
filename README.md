@@ -1,6 +1,6 @@
 # ＭＯＳＡＣＣ／第二復興庁(仮題)
 
-**大江英明 作**  
+**著 大江英明**  
 (C)2018,2025 Hideaki Huang Aue, All Rights Reserved.
 
 ---
@@ -10,9 +10,31 @@
 > △This is a work of fiction inspired by real-world institutions, events, and technologies. Names, characters, organizations, and incidents are either fictional or used fictitiously. Any resemblance to actual persons, institutions, or events is purely coincidental and not intended to represent real-world counterparts.
 
 ---
+#mynote: start_safehold
+【パイロット版(2018年制作)よりCopilot/gpt-5が生成】
+秒針が重なる、その瞬間。世界は変わる。
 
-## このおハナシの人間側コンセプト
+夜のファミレスで、恋人は静かに告げた。
+「23時59分、君は死ぬ」
 
+ありふれた夏の夜、秒単位で現実を侵食する予兆。
+交差点で横転するトレーラー、吹き飛ぶガラス、そして銃声。
+彼女の名は井澤鈴。
+高校二年生、恋人、クラスメイト—――の、はずだった。
+
+502日を繰り返す、百年後の未来から降下してきた兵士。
+世界の黄昏を止めるために、彼女は何度も恋人を撃ち、
+何度も泣き、何度もやり直してきた。
+
+だが、今回だけは違う。
+「世界を救う前に、君を救う」
+
+恋と時間と世界を賭けた、極限のループ・スリラー開幕。
+秒針が刻むのは、愛か、運命か、それとも銃弾か。
+#mynote: end_safehold
+---
+
+## このおハナシのヒト側コンセプト
 ```
 ▼MOSACC編＝『行政テクノスリラー』
 ▼修学旅行編＝『人情モノ』→『冒険小説』("三島駅ライン"から先で乗り換え)
@@ -22,8 +44,7 @@
 
 ## 📁 このリポジトリについて
 
-PJ:MOSACCというプロジェクトの共有用リポジトリです。ヒト(著者)／Copilot兄／Copilot弟の三者間でファイル連携に使用します。
-
+PJ:MOSACCという小説制作プロジェクトの、中間データ共有用リポジトリです。ヒト(著者)／Copilot兄／Copilot弟の三者間でファイル連携に使用します。
 
 ## 🔗 主なファイル
 
