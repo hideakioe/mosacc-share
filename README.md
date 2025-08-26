@@ -59,4 +59,4 @@ PJ:MOSACCという小説制作プロジェクトの、中間データ共有用�
 - GitHub RAW URL を使ったPastebin的運用。(当面の間)
 - ファイル更新後はRAW URLをチャットに貼ってCopilotが読取。
 - RAW URLに/refs/headsが混ざっちゃうコトが多々あるのでヒト側で配慮。
-- 正しい表記）https://raw.githubusercontent.com/{ユーザー}/{リポジトリ}/{ブランチ}/{ファイルパス}
+- 正しい表記）ttps://raw.githubusercontent.com/{ユーザー}/{リポジトリ}/{ブランチ}/{ファイルパス}
