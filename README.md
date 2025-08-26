@@ -60,3 +60,12 @@ PJ:MOSACCという小説制作プロジェクトの、中間データ共有用�
 - ファイル更新後はRAW URLをチャットに貼ってCopilotが読取。
 - RAW URLに/refs/headsが混ざっちゃうコトが多々あるのでヒト側で配慮。
 - 正しい表記）ttps://raw.githubusercontent.com/{ユーザー}/{リポジトリ}/{ブランチ}/{ファイルパス}
+
+
+## ご注意
+
+- このリポジトリは中間成果物の公開・バックアップを目的としています。  
+- Pull Request や Issue、Discussions などの外部提案には対応しておりません。すみません。  
+- 最終成果物はローカル環境で編集・仕上げが行われるため、GitHub上での変更提案はご遠慮ください。
+- _This repository is for public backup and display only. External contributions such as pull requests or issues are not accepted._
+
