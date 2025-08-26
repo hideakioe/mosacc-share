@@ -2,6 +2,7 @@
 # split_text.py
 
 テキストファイル分割ツール（ドラッグ＆ドロップ & 自動検出対応）
+(Powerd by MS-Copilot)
 
 ---
 
