@@ -1,0 +1,122 @@
+{
+  "project": "PJ:SHOKAN",
+  "handoff_for": "兄コパ（別アカウント）",
+  "purpose": "進行共有・タグ仕様同期（SHOKAN専用）",
+  "meta": {
+    "file_version": "2025-08-28T13-03-22Z",
+    "schema_version": "1.0.0",
+    "created_at": "2025-08-28T13-03-22Z",
+    "updated_at": "2025-08-28T13-03-22Z",
+    "owners": {
+      "human": "大江英明",
+      "copilots": [
+        "兄コパ",
+        "弟コパ"
+      ]
+    }
+  },
+  "snapshot_decisions": {
+    "com_roll": {
+      "status": "採用済み",
+      "hierarchy": {
+        "parent": "scene",
+        "is_leaf": true
+      },
+      "visibility": {
+        "export": "hidden",
+        "char_index": "exclude"
+      },
+      "inherit": {
+        "lang": "scene",
+        "timestamp": "scene"
+      },
+      "body_tag_mapping": {
+        "human": "#B-Roll: start/end -> b_roll",
+        "ai": "#COM-Roll: start/end -> com_roll"
+      }
+    },
+    "hierarchy_rules": {
+      "max_depth": 2,
+      "top_level": [
+        "scene",
+        "mynote",
+        "safehold"
+      ],
+      "scene_children": [
+        "pov",
+        "b_roll",
+        "com_roll"
+      ],
+      "leaf_tags": [
+        "pov",
+        "b_roll",
+        "com_roll"
+      ],
+      "notes_top_level_only": true,
+      "no_cycles": true,
+      "scene_must_have_child": true
+    },
+    "validation_profiles": {
+      "draft": {
+        "unresolved_ref": "warn",
+        "autofix_level": 1
+      },
+      "release": {
+        "unresolved_ref": "error",
+        "autofix_level": 1
+      },
+      "exceptions": {
+        "mynote": "warn",
+        "safehold": "warn"
+      }
+    },
+    "build_policy": {
+      "insert_build_tag_in_body": false,
+      "store_as_meta": true,
+      "profile_default": "draft",
+      "switch_to_release_conditions": {
+        "unresolved_ref_zero": true,
+        "human_review_required": true
+      },
+      "review_fields": [
+        "reviewer",
+        "method",
+        "timestamp_utc",
+        "notes"
+      ]
+    }
+  },
+  "artifacts": {
+    "rulebook_latest_temp": {
+      "name": "PJ_SHOKAN_Rulebook_2025-08-28T12-57-26Z.json",
+      "url": "https://jp-prod.asyncgw.teams.microsoft.com/v1/objects/0-ejp-d2-12ce78a4dc2f645561859f80e873f2e1/views/original/PJ_SHOKAN_Rulebook_2025-08-28T12-57-26Z.json",
+      "sha256": "e8efef80c5a54e026ab06c0b345b05bac9017b0225ab8c477c530eec71532723",
+      "size": 6747
+    },
+    "handoff_latest_temp": {
+      "name": "PJ_SHOKAN_handoff_2025-08-28T12-57-26Z.json",
+      "url": "https://jp-prod.asyncgw.teams.microsoft.com/v1/objects/0-ejp-d1-b823f5b9a1c7e8fd6b2510962af921df/views/original/PJ_SHOKAN_handoff_2025-08-28T12-57-26Z.json",
+      "sha256": "ba34466d45603ed17a5e3c4cdae013ef9d360f0dfad68936a29308a2e79fdbca",
+      "size": 7632
+    },
+    "lint_template_temp": {
+      "name": "PJ_SHOKAN_lint_TEMPLATE_2025-08-28T12-57-26Z.json",
+      "url": "https://jp-prod.asyncgw.teams.microsoft.com/v1/objects/0-ejp-d3-9dc09012406c3e8e3fef3a25e4c52721/views/original/PJ_SHOKAN_lint_TEMPLATE_2025-08-28T12-57-26Z.json",
+      "sha256": "6355622ed1116f51ab1d7728766fe37526c6cd6bcdff0893ccbbde4637f5b33d",
+      "size": 422
+    },
+    "github_baseline_rulebook_raw": "https://raw.githubusercontent.com/hideakioe/mosacc-share/main/for-Copilot/PJ-SHOKAN/PJ_SHOKAN_Rulebook_2025-08-27-2125.json"
+  },
+  "instructions_for_ani": [
+    "1) このJSONを読み込み、`snapshot_decisions`を基準に解析器を更新してください。",
+    "2) `enum_tag_names` に `com_roll` を追加し、`scene_children` と `leaf_tags` にも反映してください。",
+    "3) 検証はデフォルト `draft` プロファイルで実行、release時は `unresolved_ref=error` としてください。",
+    "4) buildタグは本文に挿入せず、`build_meta` に記録してください。",
+    "5) lintレポート雛形（同梱）に沿って未解決ref/自動修復ログを出力してください。",
+    "6) 受領したら 'ACK SHOKAN handoff {file_version}' と短く返答してください。"
+  ],
+  "notes": [
+    "一時リンクは期限切れになることがあります。切れていたら人間オーナーに連絡してください。",
+    "GitHubへの反映後は、兄コパは GitHub RAW を優先的に参照できます。"
+  ]
+}
