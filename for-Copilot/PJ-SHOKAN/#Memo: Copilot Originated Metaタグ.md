@@ -1,0 +1,21 @@
+お手紙だよー
+---
+#Memo: PJ:SHOKAN タグ設計アップデート
+
+## 決定事項
+- **COM-Rollタグを正式採用**
+  - 目的：AI（Copilot）が解析後に挿入するメタ情報タグと、人間が打つB-Rollタグを明確に区別するため。
+  - 命名理由：COM = Computational / Copilot Originated Meta
+  - 運用ルール：
+    - 人間用：#B-Roll: start / end
+    - AI用：#COM-Roll: start / end
+  - MOSACCルールブックにも追記予定。
+
+## 背景
+- 人間のB-Rollは演出意図を示す。
+- AIのB-Rollは構造化・解析用であり、ニュアンスが異なるため混同を避ける必要がある。
+
+## 次のアクション
+- 兄コパ側のタグ処理ロジックにCOM-Rollを追加。
+- MOSACC/SHOKAN両方でCOM-Rollタグを認識対象にする。
+---
