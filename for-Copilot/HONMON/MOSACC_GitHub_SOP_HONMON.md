@@ -1,7 +1,7 @@
 
 # PJ:MOSACC タグ運用・GitHub作業指示書（gpt-5版 / mosacc-share 配置版）
 
-**版**: 2025-09-06T210721Z  
+**版**: 2025-09-06T210721Z
 **対象**: 兄コパ(gpt-5)・弟コパ(gpt-5)・ユーザー共通 / プロローグ以降の全モジュール
 
 ---
@@ -28,23 +28,23 @@
   README.md            # 簡易の運用メモ
 ```
 
-> **注意**: 兄コパへの共有は **GitHubのファイル画面で [Raw] を押して得たURL** をチャットに貼る。`teams.microsoft.com` 等の一時URLは使用しない。
+> **注意**: 兄コパへの共有は **GitHubのファイル画面で [Raw] を押して得たURL** をチャットに貼る(`teams.microsoft.com` の一時URLは他アカウントでは使用不可)。
 
 ---
 
 ## 2. 運用モード（Pastebinスタイル / Rawリンク）
 - 兄コパは **リンクを読むだけ**（チャットにRaw URLを列挙）。
 - 弟コパは **4点セット** を返す：
-  1) 構造化JSON  
-  2) タグ挿入プラン（Before/After）  
-  3) 差分レポート  
+  1) 構造化JSON
+  2) タグ挿入プラン（Before/After）
+  3) 差分レポート
   4) Worldbuilding小辞典（差分/任意）
 - 長文は分割し、**ファイルごとにRaw URL** を提示。
 
 ---
 
 ## 3. ユーザーがやること（最小）
-1. 本文を `----` 区切りで用意（原則 **1ブロック=1 Scene**）。
+1. 本文を `----` 区切りで用意（原則 **1ブロック=1 Scene**）。※gpt-5の混乱が予想される場合は冒頭部のみScene,Time,POV,Locationタグを手打ち。
 2. 先頭行に **INTAKE行** を付ける：
    ```
    INTAKE: MOSACC / module=修学旅行編 / section=1-1
@@ -158,4 +158,4 @@ B-Roll:
 
 ---
 
-**備考**: Worldbuilding小辞典は **プロローグ版を正本** とし、拡張・矛盾は必ず小辞典に先に反映。本文は参照に留める。
+**備考**: Worldbuilding小辞典は **HONMONフォルダ直下にある最新版を正本**(for-Copilot/HONMON/worldbuilding_glossary_mosacc_honmon_YYYYMMDD.md) とし、拡張・矛盾は必ず小辞典に先に反映。本文は参照に留める。
