@@ -1,0 +1,265 @@
+{
+  "metadata": {
+    "project": "pj:shokan",
+    "rulebook_name": "PJ:SHOKAN Rulebook",
+    "version": "2025-08-27-2125",
+    "version_timezone": "UTC",
+    "created_at_utc": "2025-08-27T21:25:00Z",
+    "compatibility": {
+      "pj:mosacc_rulebook": "v0.3+",
+      "notes": "構文・タグはMOSACCと共通化。COM-Roll採用によりAIメタと人間B-Rollを明確分離。"
+    },
+    "owners": ["兄コパ", "弟コパ"],
+    "license": "CC-BY (docs/ 以下は既定でCC-BY方針)"
+  },
+  "goals": [
+    "日本語の自由度（演出・地の文）と構造化（解析・タグ走査）の両立",
+    "人間の演出B-RollとAI起源メタ（COM-Roll）の厳密分離",
+    "最終成果物（読者向け）からメタ／補助タグを安全に除去できること",
+    "兄弟コパ間で同一のタグ検出・削除・出力ポリシーを共有"
+  ],
+  "tag_definitions": [
+    {
+      "id": "HONMON",
+      "label": "本文範囲",
+      "purpose": "本文の開始/終了を明示。パーサはこの範囲のみを『本文』として扱う。",
+      "syntax": {
+        "start": "#HONMON: start",
+        "end": "#HONMON: end"
+      },
+      "ownership": "human",
+      "payload": "自由記述可（タグ内に内容は置かないのが原則）",
+      "nesting": "disallow",
+      "render_policy": "reader_facing: strip; analysis: keep markers only",
+      "regex": {
+        "start": "^\\s*#HONMON:\\s*start\\s*$",
+        "end": "^\\s*#HONMON:\\s*end\\s*$"
+      },
+      "examples": [
+        "#HONMON: start",
+        "（本文……）",
+        "#HONMON: end"
+      ]
+    },
+    {
+      "id": "B-Roll",
+      "label": "人間Bロール（演出）",
+      "purpose": "映像的・補助的な演出意図や伏線の覚え書き（人間が書く）。",
+      "syntax": { "start": "#B-Roll: start", "end": "#B-Roll: end" },
+      "ownership": "human",
+      "payload": "自然言語自由記述（日本語推奨）。本文に影響しない注釈。",
+      "nesting": "allow within HONMON or outside; must not overlap COM-Roll",
+      "render_policy": "reader_facing: default_strip（※出力設定で残すことも可）; analysis: keep",
+      "regex": {
+        "start": "^\\s*#B-Roll:\\s*start\\s*$",
+        "end": "^\\s*#B-Roll:\\s*end\\s*$"
+      },
+      "notes": "B-Rollは演出意図。AIが追記・編集しないこと。"
+    },
+    {
+      "id": "COM-Roll",
+      "label": "AIメタ（Copilot Originated Meta）",
+      "purpose": "AIが解析後に付与する計算起源メタ。構造化・索引・後工程デバッグ用。",
+      "syntax": { "start": "#COM-Roll: start", "end": "#COM-Roll: end" },
+      "ownership": "ai_only",
+      "payload": {
+        "allowed": [
+          "自然言語メモ",
+          "JSONライクなキー値（推奨）"
+        ],
+        "recommended_shape": {
+          "type": "com_roll",
+          "version": "1",
+          "sections": [
+            "summary",
+            "entities",
+            "timeline",
+            "tags_detected",
+            "open_questions"
+          ]
+        }
+      },
+      "nesting": "disallow overlap with B-Roll; may appear inside or outside HONMON",
+      "render_policy": "reader_facing: always_strip; analysis: keep",
+      "regex": {
+        "start": "^\\s*#COM-Roll:\\s*start\\s*$",
+        "end": "^\\s*#COM-Roll:\\s*end\\s*$"
+      },
+      "notes": "最終本文へは出力しない。AI専用領域。"
+    },
+    {
+      "id": "Scene",
+      "label": "シーン識別",
+      "purpose": "章・節・シーンの論理単位を明示。",
+      "syntax_line": "#Scene: <free-text or ID>",
+      "ownership": "human_or_ai",
+      "regex": "^\\s*#Scene:\\s*(.+)\\s*$",
+      "render_policy": "reader_facing: strip_or_render_as_heading(optional)",
+      "examples": ["#Scene: 修学旅行編 1-2 夜明け前のホテル"]
+    },
+    {
+      "id": "POV",
+      "label": "視点",
+      "purpose": "叙述視点（誰の目線か）を示す。",
+      "syntax_line": "#POV: <character or narrator>",
+      "ownership": "human_or_ai",
+      "regex": "^\\s*#POV:\\s*(.+)\\s*$",
+      "render_policy": "reader_facing: strip",
+      "examples": ["#POV: 針沢 涼", "#POV: Caleb Joseph Hawthorne"]
+    },
+    {
+      "id": "Time",
+      "label": "時刻・日時",
+      "purpose": "場面時刻をISOまたは自然言語で指定。",
+      "syntax_line": "#Time: <ISO8601|YYYY-MM-DD HH:mm TZ|日本語表現>",
+      "ownership": "human_or_ai",
+      "regex": "^\\s*#Time:\\s*(.+)\\s*$",
+      "render_policy": "reader_facing: strip",
+      "notes": "作中時刻は原則ローカル（例：JST）。バージョン刻印はUTC。"
+    },
+    {
+      "id": "Location",
+      "label": "場所",
+      "purpose": "地理ロケーション（自由記述または正式地名）。",
+      "syntax_line": "#Location: <free-text>",
+      "ownership": "human_or_ai",
+      "regex": "^\\s*#Location:\\s*(.+)\\s*$",
+      "render_policy": "reader_facing: strip"
+    },
+    {
+      "id": "meta",
+      "label": "メタ合意事項",
+      "purpose": "コンセンサス合意や運用ルールの埋め込み。",
+      "syntax_block": { "start": "#meta: start", "end": "#meta: end" },
+      "ownership": "human_or_ai",
+      "regex": {
+        "start": "^\\s*#meta:\\s*start\\s*$",
+        "end": "^\\s*#meta:\\s*end\\s*$"
+      },
+      "render_policy": "reader_facing: strip"
+    },
+    {
+      "id": "mynote_line",
+      "label": "行内マイノート",
+      "purpose": "構成メモ（行単位）。",
+      "syntax_line": "// mynote: <text>",
+      "ownership": "human",
+      "regex": "^\\s*//\\s*mynote:\\s*(.+)\\s*$",
+      "render_policy": "reader_facing: strip"
+    },
+    {
+      "id": "mynote_block",
+      "label": "ブロック式マイノート",
+      "purpose": "長文メモや一時的な退避領域。",
+      "syntax_block": { "start": "<!-- mynote:start -->", "end": "<!-- mynote:end -->" },
+      "ownership": "human",
+      "regex": {
+        "start": "^\\s*<!--\\s*mynote:start\\s*-->\\s*$",
+        "end": "^\\s*<!--\\s*mynote:end\\s*-->\\s*$"
+      },
+      "render_policy": "reader_facing: strip"
+    }
+  ],
+  "parsing_rules": {
+    "line_ending": "LF (\\n) 推奨",
+    "encoding": "UTF-8",
+    "romanization_policy": "ローマ字は単語間に半角スペース（例: 'Caleb Joseph Hawthorne'）",
+    "detection_order": [
+      "HONMON markers",
+      "block tags (#COM-Roll, #B-Roll, #meta, mynote_block)",
+      "line tags (Scene, POV, Time, Location, mynote_line)"
+    ],
+    "honmon_window": "HONMONが存在すれば、その内側のみを本文と見なす。無ければ全文を本文扱い。",
+    "overlap_policy": {
+      "B-Roll_vs_COM-Roll": "重複・交差禁止。検出した場合は後勝ち（後に閉じたブロックを優先）で警告。",
+      "nested_blocks": "同種ブロックの入れ子禁止。"
+    },
+    "regex_flags": "m (multiline), u (unicode)"
+  },
+  "rendering_rules": {
+    "profiles": {
+      "reader_facing": {
+        "strip_tags": ["COM-Roll", "B-Roll", "meta", "mynote_line", "mynote_block", "Scene", "POV", "Time", "Location", "HONMON"],
+        "keep_content_inside_HONMON": true,
+        "notes": "既定では全ての補助タグは除去。必要に応じB-Rollのみ残す切替可。"
+      },
+      "analysis": {
+        "strip_tags": ["mynote_line", "mynote_block"],
+        "keep_blocks": ["COM-Roll", "B-Roll", "meta", "Scene", "POV", "Time", "Location", "HONMON"],
+        "notes": "解析向け：COM-Rollを必ず保持。"
+      }
+    }
+  },
+  "brothers_alignment": {
+    "aniki_tasks": [
+      "タグ検出・正規化（正規表現は本JSONのregex定義を採用）",
+      "COM-Rollの生成・更新（AI専用。人間タグは触らない）",
+      "reader_facing/analysis の2プロファイルでの出力切替"
+    ],
+    "otouto_tasks": [
+      "JSONルールブックの保存・配布・読み込み（OneDrive/GitHub）",
+      "成果物の保管とサイト反映（Jekyllビルド確認）",
+      "変更差分のレビューと版上げ（versionをUTCで更新）"
+    ],
+    "handshake": [
+      "aniki→otouto: COM-Rollに 'tags_detected' と 'open_questions' を記載",
+      "otouto→aniki: 反映後に 'ack' をCOM-Rollへ追記（日時UTC）"
+    ]
+  },
+  "regex_reference": {
+    "anchors": {
+      "honmon_start": "^\\s*#HONMON:\\s*start\\s*$",
+      "honmon_end": "^\\s*#HONMON:\\s*end\\s*$",
+      "broll_start": "^\\s*#B-Roll:\\s*start\\s*$",
+      "broll_end": "^\\s*#B-Roll:\\s*end\\s*$",
+      "comroll_start": "^\\s*#COM-Roll:\\s*start\\s*$",
+      "comroll_end": "^\\s*#COM-Roll:\\s*end\\s*$",
+      "meta_start": "^\\s*#meta:\\s*start\\s*$",
+      "meta_end": "^\\s*#meta:\\s*end\\s*$",
+      "mynote_line": "^\\s*//\\s*mynote:\\s*(.+)\\s*$",
+      "mynote_block_start": "^\\s*<!--\\s*mynote:start\\s*-->\\s*$",
+      "mynote_block_end": "^\\s*<!--\\s*mynote:end\\s*-->\\s*$",
+      "scene": "^\\s*#Scene:\\s*(.+)\\s*$",
+      "pov": "^\\s*#POV:\\s*(.+)\\s*$",
+      "time": "^\\s*#Time:\\s*(.+)\\s*$",
+      "location": "^\\s*#Location:\\s*(.+)\\s*$"
+    }
+  },
+  "defaults": {
+    "time_format_examples": [
+      "2011-11-06 06:30 JST",
+      "2021-10-12T14:03:00Z",
+      "夜明け前（ホテルのロビー）"
+    ],
+    "location_examples": [
+      "那覇市 内・ビーチ近くのファミリーホテル",
+      "千葉県 波瀬町 よし乃",
+      "モンタナ州 ミズーラ（US）"
+    ]
+  },
+  "test_cases": [
+    {
+      "name": "minimal_honmon_with_links",
+      "input": "#HONMON: start\n#Scene: 修学旅行編 1-2\n#POV: 針沢 涼\n#Time: 2011-11-06 06:12 JST\n#Location: 那覇市 内ホテル\n本文テキスト。\n#HONMON: end\n#COM-Roll: start\n{\"type\":\"com_roll\",\"version\":\"1\",\"summary\":\"タグ検出OK\",\"tags_detected\":[\"HONMON\",\"Scene\",\"POV\",\"Time\",\"Location\"],\"open_questions\":[]}\n#COM-Roll: end",
+      "expected_reader_facing": "本文テキスト。",
+      "expected_analysis_contains": ["#COM-Roll: start", "\"tags_detected\""]
+    },
+    {
+      "name": "broll_vs_comroll_nonoverlap",
+      "input": "#B-Roll: start\nここは演出メモ。\n#B-Roll: end\n#COM-Roll: start\nAIメタ。\n#COM-Roll: end",
+      "expected_policy": "重複なし→OK"
+    }
+  ],
+  "changelog": [
+    {
+      "version": "2025-08-27-2125",
+      "items": [
+        "新規: COM-Rollタグ（AI専用）を正式採用。#COM-Roll: start/end",
+        "B-Roll（人間）との分離を規定。重複・交差禁止。",
+        "本文範囲タグ HONMON を正式運用。reader_facingでは除去・本文のみ出力。",
+        "兄弟コパの役割とハンドシェイク手順を明文化。",
+        "正規表現・出力プロファイル（reader_facing / analysis）を定義。"
+      ]
+    }
+  ]
+}

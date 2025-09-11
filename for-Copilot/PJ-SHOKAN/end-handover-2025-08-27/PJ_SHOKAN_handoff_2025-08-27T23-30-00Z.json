@@ -1,0 +1,129 @@
+{
+  "project": "PJ:SHOKAN",
+  "handoff_for": "弟コパ（次セッション）",
+  "purpose": "セッション引継ぎ（仕様合意スナップショット／SHOKAN専用）",
+
+  "meta": {
+    "file_version": "2025-08-27T23-20-48Z",
+    "schema_version": "1.0.0",
+    "rulebook_status": "rc",
+    "created_at": "2025-08-27T23-20-48Z",
+    "updated_at": "2025-08-27T23-20-48Z",
+    "compat": { "from": "1.0.0" },
+    "source": {
+      "repo": "hideakioe/mosacc-share",
+      "dir": "for-Copilot/PJ-SHOKAN/",
+      "rulebook_raw": "https://raw.githubusercontent.com/hideakioe/mosacc-share/main/for-Copilot/PJ-SHOKAN/PJ_SHOKAN_Rulebook_2025-08-27-2125.json",
+      "changelog_path": "for-Copilot/PJ-SHOKAN/CHANGELOG.md"
+    },
+    "git": {
+      "schema_tag": "shokan-rulebook-schema-v1.0.0",
+      "latest_build_tag": "<build-2025-08-28T07-49-00Z>"
+    }
+  },
+
+  "decisions": {
+    "lang": {
+      "default": "ja",
+      "inheritance_order": ["document", "scene", "child"],
+      "notes": "pov / b_roll は親に依存（個別にはlangを持たない）"
+    },
+    "timestamps": {
+      "format": "YYYY-MM-DDTHH-mm-ssZ",
+      "targets": ["scene", "note"],
+      "fields": ["created_at", "updated_at"],
+      "inheritance": "none",
+      "notes": "pov / b_roll は親に依存（個別にはtimestampを持たない）"
+    }
+  },
+
+  "policy": {
+    "authority": {
+      "file_name_is_source_of_truth": true,
+      "json_meta_file_version_is_mirror": true
+    },
+    "file_naming": {
+      "pattern": "PJ_SHOKAN_Rulebook_YYYY-MM-DDTHH-mm-ssZ.json",
+      "example": "PJ_SHOKAN_Rulebook_2025-08-27T12-25-00Z.json",
+      "note": "時刻のコロン(:)はハイフン(-)に置換（Windows互換）"
+    },
+    "naming_conventions": {
+      "json_keys": "snake_case",
+      "enum_tag_names": ["scene", "pov", "b_roll", "mynote", "safehold"],
+      "internal_reserved_keys_prefix": "_",
+      "id_namespace_format": "<namespace>_<body>",
+      "reserved_namespaces": ["scene", "char", "note"],
+      "id_regex": "^(scene|char|note)_[a-z0-9_]+$"
+    },
+    "references": {
+      "single_ref_suffix": "_ref",
+      "multi_refs_suffix": "_refs",
+      "scene_ref_regex": "^scene_[a-z0-9_]+$",
+      "character_ref_regex": "^char_[a-z0-9_]+$",
+      "note_ref_regex": "^note_[a-z0-9_]+$"
+    },
+    "visibility_rules": {
+      "mynote":  { "export": "hidden", "char_index": "exclude" },
+      "safehold": { "export": "hidden", "char_index": "exclude", "audit_log": true },
+      "b_roll":  { "export": "hidden", "char_index": "exclude", "scope": "SHOKAN-only-meta" }
+    },
+    "redaction": {
+      "placeholder": "[REDACTED]",
+      "apply_to": ["safehold"]
+    },
+    "public_release": {
+      "source_of_truth": ".jtd（人間原本）",
+      "ai_json_usage": "内部仕様調整と機械処理のみ。公開テキストの抽出には用いない。"
+    }
+  },
+
+  "schema_hints": {
+    "file_version_regex": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}-\\d{2}-\\d{2}Z$",
+    "semver_regex": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$",
+    "allow_additional_properties": true,
+    "defs": ["ns_identifier", "scene_ref", "character_ref", "note_ref", "tag_name", "tag_def"]
+  },
+
+  "quick_examples": {
+    "tags_minimal": [
+      {
+        "tag_name": "scene",
+        "id": "scene_001",
+        "name": "ロビー冒頭",
+        "created_at": "2025-08-28T01-05-00Z",
+        "updated_at": "2025-08-28T01-05-00Z",
+        "children": [
+          { "tag_name": "pov", "id": "note_pov_ryo", "note": "涼視点の導入（lang/timestampは親sceneを継承）" }
+        ]
+      },
+      {
+        "tag_name": "mynote",
+        "id": "note_memo_0001",
+        "note": "作者用：後で伏線整理",
+        "created_at": "2025-08-28T01-05-00Z",
+        "updated_at": "2025-08-28T01-05-00Z"
+      }
+    ],
+    "links": {
+      "prev_scene_ref": "scene_000",
+      "next_scene_ref": "scene_002",
+      "lead_character_ref": "char_miki_saeki"
+    }
+  },
+
+  "open_points_next_session": [
+    "タグ階層の厳密化（必須/任意、循環禁止、最大深度）",
+    "参照整合性チェック（未解決refの検出・ビルドエラー方針）",
+    "buildタグの付与タイミングの運用固定（手動／自動の切り分け）"
+  ],
+
+  "resume_instructions_for_next_session": {
+    "greeting": "（弟コパ）このハンドオフJSONを読み込みました。次はタグ階層の厳密化から始めます。",
+    "first_question": "タグ階層について：必須/任意、最大深度（例：scene直下に許可する子タグとその入れ子制限）をA/B/Cのどれでいきますか？"
+  },
+
+  "owners": {
+    "human_owner": "大江英明",
+    "copilots": ["弟コパ（現セッション）", "弟コパ（次セッション）"]
+  }
+}
