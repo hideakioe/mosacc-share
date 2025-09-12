@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2025-09-06T15:24:00Z",
+  "project": {
+    "name": "PJ:MOSACC",
+    "module": "プロローグ編",
+    "section": "プロローグ",
+    "note": "既存の手打ちタグは除去。再構造化・再タグ付けを本JSONに準拠して行う。"
+  },
+  "rulebook": {
+    "base": "v0.2",
+    "applied": "v0.3-aligned",
+    "principles": [
+      "Scene/Beatsは必須。B-Rollは自由記述（伏線・演出意図を許容）。",
+      "POV/Time/Location/Props/B-Rollの書式を簡潔に統一。",
+      "COM-RollはAI補助用タグとして使用可（本文出力時の区別を徹底）。"
+    ]
+  },
+  "scenes": [],
+  "worldbuilding": [],
+  "unresolved": [
+    "HMMWVの担当部隊・任務内容（貨物/人員のいずれか）",
+    "監視センターに警報が上がらなかった理由（回線/装置/人的）",
+    "乗員の最終搬出経路・救出隊の到着時刻",
+    "郵便局跡ノードの復旧目処と代替通信計画の恒常化"
+  ],
+  "continuity_check": {
+    "time_span": "2021-08-01 08:30〜08:55 JST",
+    "pov_flow": [],
+    "location_flow": [],
+    "notes": [
+      "天候：雷雨前線通過後で視程良好。『エンティティ』上端視認可。",
+      "通信：無線不可。有線ノード事故中。レーザー可用エリアは海側高所。"
+    ]
+  },
+  "characters": [
+    {
+      "name": "棚崎 航",
+      "role": "MOSACC 警備部 警備中隊・大原支所（セキュリティオフィサー）",
+      "traits": [
+        "地元出身",
+        "実務的",
+        "災害トラウマの兆候"
+      ]
+    },
+    {
+      "name": "箭内 真希",
+      "role": "交換人事（将来幹部候補）／福島県警志望",
+      "traits": [
+        "冷静",
+        "地図読みに長ける",
+        "支援的コミュニケーション"
+      ]
+    },
+    {
+      "name": "田中 恵子",
+      "role": "自主残留者（巡回連絡対象）",
+      "traits": [
+        "82歳",
+        "単身",
+        "菜園・井戸水併用"
+      ]
+    }
+  ],
+  "tag_naming_policy": {
+    "core": [
+      "Scene",
+      "Time",
+      "POV",
+      "Location",
+      "Beats",
+      "Props",
+      "B-Roll",
+      "Worldbuilding",
+      "Notes"
+    ],
+    "aux": [
+      "COM-Roll"
+    ],
+    "guidelines": [
+      "英語基軸＋日本語可読の二層（本文は英語キー、説明は日本語）。",
+      "新設タグは汎用語を優先し、用途が重なる場合は既存タグに統合。",
+      "B-Rollは自由記述だが、最小キー（title/type/source/note）を推奨。"
+    ]
+  }
+}
